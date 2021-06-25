@@ -41,6 +41,20 @@ export class VertexComponent implements OnInit {
       this.nCols.push(i);
     }
 
+    this.initialize();
+    this.initializeObstacle();
+    this.initializeShortestPath();
+
+  }
+
+  ngOnInit() {
+
+    this.addNeighbours();
+
+  }
+
+  public initialize(): void {
+
     for (let i = 0; i < 15; i++) {
       this.vertices[i] = [];
       for (let j = 0; j < 30; j++) {
@@ -56,13 +70,18 @@ export class VertexComponent implements OnInit {
       }
     }
 
+  }
 
+  public initializeObstacle(): void {
     for (let i = 0; i < 15; i++) {
       this.obstacle[i] = [];
       for (let j = 0; j < 30; j++) {
         this.obstacle[i][j] = false;
       }
     }
+  }
+
+  public initializeShortestPath(): void {
 
     for (let i = 0; i < 15; i++) {
       this.shortestPath[i] = [];
@@ -73,58 +92,65 @@ export class VertexComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  public addNeighbours(): void {
 
     for (let i = 0; i < 15; i++) {
       for (let j = 0; j < 30; j++) {
-        if ((i > 0 && i < 14) && (j > 0 && j < 29)) {
-          if (this.vertices[i][j + 1] !== undefined)
-            this.vertices[i][j].addvertex(this.vertices[i][j + 1]);
+        if (this.vertices[i][j + 1] !== undefined)
+          this.vertices[i][j].addvertex(this.vertices[i][j + 1]);
 
-          if (this.vertices[i + 1][j] !== undefined)
-            this.vertices[i][j].addvertex(this.vertices[i + 1][j]);
+        if (this.vertices[i + 1] !== undefined && this.vertices[i + 1][j] !== undefined)
+          this.vertices[i][j].addvertex(this.vertices[i + 1][j]);
 
-          if (this.vertices[i - 1][j] !== undefined)
-            this.vertices[i][j].addvertex(this.vertices[i - 1][j]);
+        if (this.vertices[i - 1] !== undefined && this.vertices[i - 1][j] !== undefined)
+          this.vertices[i][j].addvertex(this.vertices[i - 1][j]);
 
-          if (this.vertices[i][j - 1] !== undefined)
-            this.vertices[i][j].addvertex(this.vertices[i][j - 1]);
+        if (this.vertices[i][j - 1] !== undefined)
+          this.vertices[i][j].addvertex(this.vertices[i][j - 1]);
 
-        }
       }
     }
 
   }
 
+
   onRightClick(event: any, row: number, col: number) {
+
     event.preventDefault();
     if (!(row === this.startRow && col === this.endCol)
       && !(row === this.endRow && col === this.endCol)) {
-      console.log([row, col]);
-      this.obstacle[row][col] = true;
-      this.vertices[row][col].isObstacle = true;
+      this.obstacle[row][col] = !this.obstacle[row][col];
+      this.vertices[row][col].isObstacle = !this.vertices[row][col].isObstacle;
       this.shortestPath[row][col] = false;
+      this.vertices[row][col].isVisited = false;
+    }
+
+  }
+
+  public reset(): void {
+    for (let i = 0; i < 15; i++) {
+      for (let j = 0; j < 30; j++) {
+        this.vertices[i][j].isVisited = false;
+      }
     }
   }
 
   public startAlgorithm() {
 
-    for (let i = 0; i < 15; i++) {
-      this.shortestPath[i] = [];
-      for (let j = 0; j < 30; j++) {
-        this.shortestPath[i][j] = false;
-      }
-    }
+    this.addNeighbours();
+    this.initializeShortestPath();
+    this.reset();
 
     this.bfs = new BFS(this.vertices, this.startRow, this.startCol, this.endRow, this.endCol);
-    this.bfs.printVertices();
+
     let pathExists = this.bfs.run();
+
     console.log("Path exists:", pathExists);
     if (pathExists) {
 
       let v = this.vertices[this.endRow][this.endCol].getParent();
+
       while (!v.isStartVertex === true) {
-        console.log(v);
         this.shortestPath[v.getRowColId()[0]][v.getRowColId()[1]] = true;
         v = v.getParent();
       }

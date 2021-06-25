@@ -13,9 +13,9 @@
   <div *ngFor="let row of nRows" class="blockRow">
     <div *ngFor="let col of nCols" class="blockCol">
       <!-- <hr class="connector" /> -->
-      <div class="block" (contextmenu)="onRightClick($event, row, col)" [ngClass]="{'obstacle': obstacle[row][col] === true, 'start': (row === startRow && col === startCol), 'end':
+      <div class="block" (contextmenu)="onRightClick($event, row, col)" [ngClass]="{'obstacle': vertices[row][col].isObstacle, 'start': (row === startRow && col === startCol), 'end':
         (row === endRow && col === endCol), 'visited': (vertices[row][col].isVisited === true && shortestPath[row][col]
-        === false && (row !== startRow && col !== startCol) && (row !== endRow && col !== endCol)),
+        === false && !vertices[row][col].isStartVertex && !vertices[row][col].isEndVertex),
         'path': (shortestPath[row][col] ===  true)}">
       </div>
     </div>

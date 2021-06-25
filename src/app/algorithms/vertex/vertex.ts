@@ -32,4 +32,5 @@ export class Vertex {
   public getRowColId(): number[] {
     return [this.rowId, this.colId];
   }
+
 }
