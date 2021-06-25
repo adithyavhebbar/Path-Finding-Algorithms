@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button name="start" (click)="startAlgorithm()">start</button>
+  <div *ngFor="let row of nRows" class="blockRow">
+    <div *ngFor="let col of nCols" class="blockCol">
+      <!-- <hr class="connector" /> -->
+      <div class="block" (contextmenu)="onRightClick($event, row, col)" [ngClass]="{'obstacle': obstacle[row][col] === true, 'start': (row === startRow && col === startCol), 'end':
+        (row === endRow && col === endCol), 'visited': (vertices[row][col].isVisited === true && shortestPath[row][col]
+        === false && (row !== startRow && col !== startCol) && (row !== endRow && col !== endCol)),
+        'path': (shortestPath[row][col] ===  true)}">
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

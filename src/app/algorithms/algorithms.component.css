@@ -1,0 +1,30 @@
+.block {
+  border: 1px solid rgb(42, 59, 56);
+  width: 20px;
+  height: 20px;
+  /* margin-left: 10%; */
+  /* background-color: blue; */
+}
+
+.blockCol {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  /* border: 3px solid rgb(29, 196, 14); */
+}
+
+.blockRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 3px 3px 3px 8px;
+  /* border: 3px solid rgb(128, 58, 58); */
+}
+
+

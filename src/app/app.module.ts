@@ -3,14 +3,22 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NodeComponent } from './node/node.component';
+import { AlgorithmsComponent } from './algorithms/algorithms.component';
+import { VertexComponent } from "./algorithms/vertex/vertex.component";
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NodeComponent,
+    AlgorithmsComponent,
+    VertexComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CommonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
