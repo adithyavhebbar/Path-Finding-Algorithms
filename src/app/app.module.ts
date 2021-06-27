@@ -3,22 +3,34 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NodeComponent } from './node/node.component';
 import { AlgorithmsComponent } from './algorithms/algorithms.component';
 import { VertexComponent } from "./algorithms/vertex/vertex.component";
 import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule, MatIconModule,
+  MatSidenavModule, MatListModule,
+  MatButtonModule, MatSelectModule, MatDialogModule } from '@angular/material';
+import { AstarComponent } from './algorithms/astar/astar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NodeComponent,
     AlgorithmsComponent,
     VertexComponent,
+    AstarComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     CommonModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

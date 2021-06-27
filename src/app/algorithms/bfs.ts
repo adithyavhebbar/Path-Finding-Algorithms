@@ -16,7 +16,6 @@ export class BFS {
 
     let startingVertex: Vertex = this.vertices[this.startRow][this.startCol];
 
-    let endingVertex: Vertex = this.vertices[this.endRow][this.endCol];
     this.queue.add(startingVertex);
 
 

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Vertex } from '../vertex/vertex';
 import { BFS } from "../bfs";
+import { DFS } from '../dfs';
+
 
 @Component({
   selector: 'app-vertex',
@@ -11,14 +13,20 @@ import { BFS } from "../bfs";
 
 
 export class VertexComponent implements OnInit {
+
+  private readonly numberOfColumns = 40;
+  private readonly numberOfROws = 20;
+
+  selectedAlgorithm: string = "BFS";
+
   nRows: number[] = [];
   nCols: number[] = [];
 
-  startRow: number = 7;
-  startCol: number = 3;
+  startRow: number = Math.floor(Math.random() * this.numberOfROws);
+  startCol: number = Math.floor(Math.random() * this.numberOfColumns);
 
-  endRow: number = 7;
-  endCol: number = 23;
+  endRow: number = Math.floor(Math.random() * this.numberOfROws);
+  endCol: number = Math.floor(Math.random() * this.numberOfColumns);
 
   vertices: Vertex[][] = [[]];
   obstacle: boolean[][] = [[]];
@@ -27,17 +35,24 @@ export class VertexComponent implements OnInit {
   // queue: Queue<Vertex> = new Queue();
 
   /* Algorithm initilization */
+
+  /* Breadth first Search */
   bfs: BFS;
+
+  /* Depth First Search */
+  dfs: DFS;
+
+
 
   constructor() {
 
     this.vertices = [];
 
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < this.numberOfROws; i++) {
       this.nRows.push(i);
     }
 
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < this.numberOfColumns; i++) {
       this.nCols.push(i);
     }
 
@@ -55,9 +70,9 @@ export class VertexComponent implements OnInit {
 
   public initialize(): void {
 
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < this.numberOfROws; i++) {
       this.vertices[i] = [];
-      for (let j = 0; j < 30; j++) {
+      for (let j = 0; j < this.numberOfColumns; j++) {
         this.vertices[i][j] = new Vertex(i, j);
         this.vertices[i][j].isVisited = false;
         this.vertices[i][j].vertices = [];
@@ -73,9 +88,9 @@ export class VertexComponent implements OnInit {
   }
 
   public initializeObstacle(): void {
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < this.numberOfROws; i++) {
       this.obstacle[i] = [];
-      for (let j = 0; j < 30; j++) {
+      for (let j = 0; j < this.numberOfColumns; j++) {
         this.obstacle[i][j] = false;
       }
     }
@@ -83,9 +98,9 @@ export class VertexComponent implements OnInit {
 
   public initializeShortestPath(): void {
 
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < this.numberOfROws; i++) {
       this.shortestPath[i] = [];
-      for (let j = 0; j < 30; j++) {
+      for (let j = 0; j < this.numberOfColumns; j++) {
         this.shortestPath[i][j] = false;
       }
     }
@@ -94,8 +109,8 @@ export class VertexComponent implements OnInit {
 
   public addNeighbours(): void {
 
-    for (let i = 0; i < 15; i++) {
-      for (let j = 0; j < 30; j++) {
+    for (let i = 0; i < this.numberOfROws; i++) {
+      for (let j = 0; j < this.numberOfColumns; j++) {
         if (this.vertices[i][j + 1] !== undefined)
           this.vertices[i][j].addvertex(this.vertices[i][j + 1]);
 
@@ -113,7 +128,9 @@ export class VertexComponent implements OnInit {
 
   }
 
-
+  public doNothing(event): void {
+    event.preventDefault();
+  }
   onRightClick(event: any, row: number, col: number) {
 
     event.preventDefault();
@@ -123,13 +140,14 @@ export class VertexComponent implements OnInit {
       this.vertices[row][col].isObstacle = !this.vertices[row][col].isObstacle;
       this.shortestPath[row][col] = false;
       this.vertices[row][col].isVisited = false;
+      this.startAlgorithm();
     }
 
   }
 
   public reset(): void {
-    for (let i = 0; i < 15; i++) {
-      for (let j = 0; j < 30; j++) {
+    for (let i = 0; i < this.numberOfROws; i++) {
+      for (let j = 0; j < this.numberOfColumns; j++) {
         this.vertices[i][j].isVisited = false;
       }
     }
@@ -140,21 +158,39 @@ export class VertexComponent implements OnInit {
     this.addNeighbours();
     this.initializeShortestPath();
     this.reset();
+    if (this.selectedAlgorithm === 'BFS') {
+      this.bfs = new BFS(this.vertices, this.startRow, this.startCol, this.endRow, this.endCol);
 
-    this.bfs = new BFS(this.vertices, this.startRow, this.startCol, this.endRow, this.endCol);
+      let pathExists = this.bfs.run();
 
-    let pathExists = this.bfs.run();
+      console.log("Path exists:", pathExists);
+      if (pathExists) {
 
-    console.log("Path exists:", pathExists);
-    if (pathExists) {
+        let v = this.vertices[this.endRow][this.endCol].getParent();
 
-      let v = this.vertices[this.endRow][this.endCol].getParent();
-
-      while (!v.isStartVertex === true) {
-        this.shortestPath[v.getRowColId()[0]][v.getRowColId()[1]] = true;
-        v = v.getParent();
+        while (!v.isStartVertex === true) {
+          this.shortestPath[v.getRowColId()[0]][v.getRowColId()[1]] = true;
+          v = v.getParent();
+        }
       }
     }
+
+    if (this.selectedAlgorithm === 'DFS') {
+      this.dfs = new DFS(this.vertices, this.startRow, this.startCol, this.endRow, this.endCol);
+      let pathExists = this.dfs.run();
+
+      console.log("Path exists:", pathExists);
+      if (pathExists) {
+        console.log("%%%%%%%%%%%%%%%%")
+        let v = this.vertices[this.endRow][this.endCol].getParent();
+        console.log(this.vertices[this.endRow][this.endCol]);
+        while (!v.isStartVertex === true) {
+          this.shortestPath[v.getRowColId()[0]][v.getRowColId()[1]] = true;
+          v = v.getParent();
+        }
+      }
+    }
+
   }
 
 }

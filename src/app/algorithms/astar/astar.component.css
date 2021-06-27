@@ -3,6 +3,9 @@
   --darkbackground: rgba(255, 255, 255, .04);
 }
 
+body {
+  margin: 0%;
+}
 
 .block {
   border: 1px solid rgb(42, 59, 56);
@@ -24,7 +27,6 @@
   height: 1.5rem;
   padding: 0;
   margin: 0;
-  /* border: 3px solid rgb(29, 196, 14); */
 }
 
 .blockRow {
@@ -35,24 +37,12 @@
   align-items: center;
   padding: 0;
   margin: 0;
-  /* padding: 3px 3px 3px 8px; */
-  /* border: 3px solid rgb(128, 58, 58); */
 }
 
 .obstacle {
   background-color: black;
 }
 
-.connector {
-  width: 7px;
-  padding: 0%;
-  margin: 0%;
-}
-
-.vertical {
-  border-left: 3px solid black;
-  height: 8px;
-}
 
 .start {
   background-color: red;
@@ -88,6 +78,7 @@
   border-radius: 5px;
   padding-left: 20px;
 }
+
 .wrapper {
   display: flex;
   flex-direction: row;
@@ -114,6 +105,10 @@ main {
   padding-right: 2rem;
 }
 
+.node-info {
+  /* padding-left: 1rem; */
+}
+
 .info-header {
   display: flex;
   flex-direction: column;
@@ -122,6 +117,8 @@ main {
   align-items: center;
 }
 
-.info-header>div:nth-child(2) {
+.info-header > div:nth-child(2) {
   margin-top: 1rem;
 }
+
+

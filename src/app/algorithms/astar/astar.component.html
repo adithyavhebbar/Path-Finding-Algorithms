@@ -14,11 +14,18 @@
 
     <mat-toolbar-row class="toolbar-row" [class.mat-elevation-z6]="true">
       <h4 mat-stroked-button class="header">Path Finding Algorithms</h4>
+      <div class="links">
+        <a mat-stroked-button [routerLink]="['#']" routerLinkActive="router-link-active">Home</a>
+      </div>
+      <div class="links">
+        <a mat-stroked-button [routerLink]="['#']" routerLinkActive="router-link-active">Non Weighted Algorithms</a>
+      </div>
       <div class="wrapper">
         <mat-select [class.mat-elevation-z2]="true" [(value)]="selectedAlgorithm" class="algoSelect">
-          <mat-option value="DFS">DFS</mat-option>
-          <mat-option value="BFS">BFS</mat-option>
+          <mat-option value="Dijkstras">Dijkstras Algorithm</mat-option>
+          <mat-option value="Astar">A star Algorithm</mat-option>
         </mat-select>
+
         <button mat-raised-button name="start" (click)="startAlgorithm()" class="startBtn">
           Start Algorithm
         </button>
@@ -28,8 +35,11 @@
   </mat-toolbar>
 
   <div class="algo-header">
-    <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon" class="menuBtn">
-      <mat-icon>menu</mat-icon>
+    <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon" class="menuBtn"
+      (click)="openDialog(instructions)">
+      <mat-icon>
+        integration_instructions
+      </mat-icon>
     </button>
     <div class="info-header">
       <div>
@@ -43,17 +53,17 @@
         <span class="node" style="background-color: rgb(0, 0, 0); padding-left: 1rem;"></span>
         <span class="node-info" style="margin-right: 1rem;">Obstacle</span>
 
-        <span class="node" style="background-color: rgb(39, 216, 216); padding-left: 1rem;"></span>
+        <span class="node" style="background-color: rgb(39, 216, 216); padding-left: 1.1rem;"></span>
         <span class="node-info" style="margin-right: 1rem;">Visited</span>
 
         <span class="node" style="background-color: rgba(4, 28, 245, 0.74); padding-left: 1rem;"></span>
         <span class="node-info">Shortest Path</span>
       </div>
     </div>
-
-    <h4 *ngIf="selectedAlgorithm === 'DFS'">Depth First Search Algorithm</h4>
-    <h4 *ngIf="selectedAlgorithm === 'BFS'">Breadth First Search Algorithm</h4>
+    <h4 *ngIf="selectedAlgorithm === 'Dijkstras'">Dijkstras Path Finding Algorithm</h4>
+    <h4 *ngIf="selectedAlgorithm === 'Astar'">A star Path Finding Algorithm</h4>
   </div>
+
 
   <main>
 
@@ -63,9 +73,9 @@
         <div *ngFor="let col of nCols" class="blockCol" [ngClass]="{'path' :
           (shortestPath[row][col]===true)}" (contextmenu)="doNothing($event)">
 
-          <div class="block" (contextmenu)="onRightClick($event, row, col)" [ngClass]="{'obstacle': vertices[row][col].isObstacle, 'start': (row === startRow && col === startCol), 'end':
-        (row === endRow && col === endCol), 'visited': (vertices[row][col].isVisited === true && shortestPath[row][col]
-        === false && !vertices[row][col].isStartVertex && !vertices[row][col].isEndVertex),
+          <div class="block" (contextmenu)="onRightClick($event, row, col)" [ngClass]="{'obstacle': nodes[row][col].isObstacle, 'start': (row === startRow && col === startCol), 'end':
+        (row === endRow && col === endCol), 'visited': (nodes[row][col].isVisited === true && shortestPath[row][col]
+        === false && !nodes[row][col].isStartNode && !nodes[row][col].isEndNode),
         'path': (shortestPath[row][col] ===  true)}">
           </div>
 
@@ -73,6 +83,26 @@
       </div>
     </div>
   </main>
+  <ng-template #instructions>
+    <h4 mat-dialog-title>Instructions</h4>
+    <mat-dialog-content class="mat-typography">
+      <mat-icon>mouse</mat-icon>
+      <span style="margin-left: 1rem;">Right Click on the Mouse to Place the Obstacles</span>
+      <p></p>
+      <p>
+           Chnage the alogorithms from the top Drop Down
+      </p>
+      <p>
+           Change the type of Algorithms from the top button Link
+      </p>
+      <p>
+           Start the Algorithm by Pressing the "Start Algorithm" Button or by Placing Obstacle
+      </p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+  </ng-template>
 </body>
 
 </html>

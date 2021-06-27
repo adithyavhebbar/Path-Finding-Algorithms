@@ -2,13 +2,14 @@ export class Queue<T> {
 
   private items: T[];
   constructor() {
+
     this.items = [];
-    // console.log("In QUeee cons---------------------- &&&&&&&&&&&&&&", this.items.toString());
 
   }
   public add(item: T): void {
-    console.log("Item in queue:", item);
+
     this.items.push(item);
+
   }
 
   public getItems(): T[] {
@@ -16,8 +17,9 @@ export class Queue<T> {
   }
 
   public pop(): T {
+
     let v = this.items.shift();
-    console.log("After removing an item from queue", this.items);
+
     return v;
   }
 
