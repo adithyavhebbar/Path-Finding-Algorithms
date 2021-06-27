@@ -74,8 +74,7 @@
     <main>
 
       <div>
-        <div *ngFor="let row of nRows" class="blockRow" [ngClass]="{'path' :
-          (shortestPath[row][col]===true)}" (contextmenu)="doNothing($event)">
+        <div *ngFor="let row of nRows" class="blockRow" (contextmenu)="doNothing($event)">
           <div *ngFor="let col of nCols" class="blockCol" [ngClass]="{'path' :
           (shortestPath[row][col]===true)}" (contextmenu)="doNothing($event)">
 

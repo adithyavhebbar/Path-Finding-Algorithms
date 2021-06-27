@@ -9,7 +9,7 @@ const routes: Routes = [
   {path: 'non-weighted-algorithms', component: VertexComponent},
   {path: 'weighted-algorithms', component: AstarComponent},
   {path: '', component: AstarComponent},
-  {path: '**', component: NotFoundComponent}
+  { path: '**', component: AstarComponent}
 ];
 
 @NgModule({
