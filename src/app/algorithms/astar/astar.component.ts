@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material';
 import { Node } from "./node";
 import { AstarSolver } from "./astar-solver";
 import { DijkstrasSolver } from './dijkstras-solver';
+import { Router } from "@angular/router";
 
 
 
@@ -13,6 +14,8 @@ import { DijkstrasSolver } from './dijkstras-solver';
   styleUrls: ['./astar.component.css']
 })
 export class AstarComponent implements OnInit {
+
+  visible: boolean = true;
 
   @ViewChild('instructions', { static: false}) instructions: TemplateRef<any>;
 
@@ -24,15 +27,15 @@ export class AstarComponent implements OnInit {
   nRows: number[] = [];
   nCols: number[] = [];
 
-  // startRow: number = Math.floor(Math.random() * this.numberOfROws);
-  startRow: number = 7
+  startRow: number = Math.floor(Math.random() * this.numberOfROws);
+  // startRow: number = 7
 
-  // startCol: number = Math.floor(Math.random() * this.numberOfColumns);
-  startCol: number = 3
+  startCol: number = Math.floor(Math.random() * this.numberOfColumns);
+  // startCol: number = 3
 
-  // endRow: number = Math.floor(Math.random() * this.numberOfROws);
-  endRow: number = 7
-  endCol: number = 23;
+  endRow: number = Math.floor(Math.random() * this.numberOfROws);
+  // endRow: number = 7
+  endCol: number = Math.floor(Math.random() * this.numberOfColumns);
 
   nodes: Node[][] = [[]];
   obstacle: boolean[][] = [[]];
@@ -46,7 +49,7 @@ export class AstarComponent implements OnInit {
   dijKstra: DijkstrasSolver;
 
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog, private router: Router) {
 
     this.nodes = [];
 
@@ -212,6 +215,11 @@ export class AstarComponent implements OnInit {
     ref.afterClosed().subscribe(() => {
       console.log("Closed")
     })
+  }
+
+  public navigate() {
+    this.visible = false;
+    this.router.navigateByUrl('non-weighted-algorithms');
   }
 
 }

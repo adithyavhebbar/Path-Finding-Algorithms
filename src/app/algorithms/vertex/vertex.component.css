@@ -101,7 +101,8 @@ main {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: calc(80%)
+  height: calc(90%);
+  margin-top: 2rem;
 }
 
 .algo-header {

@@ -11,6 +11,7 @@ import { MatToolbarModule, MatIconModule,
   MatSidenavModule, MatListModule,
   MatButtonModule, MatSelectModule, MatDialogModule } from '@angular/material';
 import { AstarComponent } from './algorithms/astar/astar.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { AstarComponent } from './algorithms/astar/astar.component';
     AlgorithmsComponent,
     VertexComponent,
     AstarComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

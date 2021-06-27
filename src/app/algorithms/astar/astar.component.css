@@ -3,10 +3,6 @@
   --darkbackground: rgba(255, 255, 255, .04);
 }
 
-body {
-  margin: 0%;
-}
-
 .block {
   border: 1px solid rgb(42, 59, 56);
   width: 20px;
@@ -92,7 +88,8 @@ main {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: calc(80%)
+  height: calc(90%);
+  margin-top: 2rem;
 }
 
 .algo-header {
@@ -105,9 +102,6 @@ main {
   padding-right: 2rem;
 }
 
-.node-info {
-  /* padding-left: 1rem; */
-}
 
 .info-header {
   display: flex;

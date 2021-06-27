@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material';
+
 import { Vertex } from '../vertex/vertex';
 import { BFS } from "../bfs";
 import { DFS } from '../dfs';
+import { Router } from '@angular/router'
 
 
 @Component({
@@ -13,6 +16,8 @@ import { DFS } from '../dfs';
 
 
 export class VertexComponent implements OnInit {
+
+  @ViewChild('instructions', { static: false }) instructions: TemplateRef<any>;
 
   private readonly numberOfColumns = 40;
   private readonly numberOfROws = 20;
@@ -41,10 +46,11 @@ export class VertexComponent implements OnInit {
 
   /* Depth First Search */
   dfs: DFS;
+  visible: boolean = true;
 
 
 
-  constructor() {
+  constructor(private router: Router, private dialog: MatDialog) {
 
     this.vertices = [];
 
@@ -191,6 +197,18 @@ export class VertexComponent implements OnInit {
       }
     }
 
+  }
+
+  public openDialog(instruction: TemplateRef<any>): void {
+    const ref = this.dialog.open(this.instructions);
+    ref.afterClosed().subscribe(() => {
+      console.log("Closed")
+    })
+  }
+
+  public navigate() {
+    this.visible = false;
+    this.router.navigateByUrl('weighted-algorithms');
   }
 
 }
